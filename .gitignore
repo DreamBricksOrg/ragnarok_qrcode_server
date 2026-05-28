@@ -10,3 +10,4 @@ instance/
 .coverage
 htmlcov/
 valid_codes/
+generate_csv.py

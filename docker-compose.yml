@@ -11,6 +11,9 @@ services:
       API_KEY: ${API_KEY:-change-me-api-key}
       BASE_URL: ${BASE_URL:-http://127.0.0.1:5001}
       MONGO_URI: ${MONGO_URI:-mongodb://dbprojeto:3177@mongodb:27021/ragnarok?authSource=admin}
+      LOG_BASE_URL: ${LOG_BASE_URL:-}
+      LOG_API_KEY: ${LOG_API_KEY:-}
+      LOG_PROJECT_ID: ${LOG_PROJECT_ID:-}
     command: flask --app run run --host 0.0.0.0 --port 5001
     depends_on:
       - mongodb

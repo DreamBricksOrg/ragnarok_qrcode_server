@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask
 
 from app.config import get_config
@@ -7,6 +9,11 @@ from app.routes import register_routes
 
 
 def create_app(config_name: str | None = None) -> Flask:
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
     app = Flask(__name__)
     app.config.from_object(get_config(config_name))
 
