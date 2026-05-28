@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resgate de Cupom</title>
+    <style>
+      body {
+        align-items: center;
+        background: #f5f7fa;
+        color: #16202a;
+        display: flex;
+        font-family: Arial, sans-serif;
+        justify-content: center;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      main {
+        background: #ffffff;
+        border: 1px solid #d8dee6;
+        border-radius: 8px;
+        max-width: 420px;
+        padding: 32px;
+        text-align: center;
+        width: calc(100% - 48px);
+      }
+
+      .code {
+        border: 1px dashed #64748b;
+        border-radius: 6px;
+        font-size: 28px;
+        font-weight: 700;
+        margin-top: 20px;
+        overflow-wrap: anywhere;
+        padding: 16px;
+      }
+
+      .failed {
+        color: #b42318;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Resgate de Cupom</h1>
+      <p id="message">Buscando codigo...</p>
+      <div id="code" class="code" hidden></div>
+    </main>
+
+    <script>
+      const couponId = "{{ coupon_id }}";
+      const message = document.getElementById("message");
+      const code = document.getElementById("code");
+
+      fetch(`/api/${couponId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            message.textContent = "Codigo resgatado com sucesso";
+            code.textContent = data.code;
+            code.hidden = false;
+            return;
+          }
+
+          message.textContent = data.message || "Nao foi possivel resgatar o codigo";
+          message.classList.add("failed");
+        })
+        .catch(() => {
+          message.textContent = "Nao foi possivel resgatar o codigo";
+          message.classList.add("failed");
+        });
+    </script>
+  </body>
+</html>

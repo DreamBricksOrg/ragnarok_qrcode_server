@@ -1,0 +1,131 @@
+{
+  "info": {
+    "name": "Ragnarok Coupons API",
+    "description": "Collection para testar importacao e resgate de cupons.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5001"
+    },
+    {
+      "key": "api_key",
+      "value": "80ed7445-5a47-4eb2-9785-4c2fc0c4d0bc"
+    },
+    {
+      "key": "code_id",
+      "value": "6f2f0139-eed8-4da8-ae78-9674e10b3f5e"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Import Codes CSV",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "csv",
+              "type": "file",
+              "src": "sample_codes.csv"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/import/codes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "import",
+            "codes"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Generate Code URL",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/genragcode",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "genragcode"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Redeem Code",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/{{code_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "{{code_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Open Coupon Page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/pages/{{code_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "pages",
+            "{{code_id}}"
+          ]
+        }
+      }
+    }
+  ]
+}
