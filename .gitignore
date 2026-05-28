@@ -9,3 +9,4 @@ instance/
 .pytest_cache/
 .coverage
 htmlcov/
+valid_codes/

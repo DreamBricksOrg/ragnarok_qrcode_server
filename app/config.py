@@ -13,6 +13,9 @@ class BaseConfig:
     BASE_URL = getenv("BASE_URL", "http://127.0.0.1:5000")
     MONGO_URI = getenv("MONGO_URI", "mongodb://localhost:27017/ragnarok")
     JSON_SORT_KEYS = False
+    LOG_BASE_URL = getenv("LOG_BASE_URL", "")
+    LOG_API_KEY = getenv("LOG_API_KEY", "")
+    LOG_PROJECT_ID = getenv("LOG_PROJECT_ID", "")
 
 
 class DevelopmentConfig(BaseConfig):
