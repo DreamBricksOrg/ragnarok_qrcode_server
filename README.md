@@ -85,6 +85,12 @@ Retorno:
 ```
 
 ```http
+GET /pages
+```
+
+Abre uma pagina generica de cupom, sem resgatar nenhum codigo.
+
+```http
 GET /pages/6f2f0139-eed8-4da8-ae78-9674e10b3f5e
 ```
 

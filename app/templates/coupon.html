@@ -4,62 +4,70 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Resgate de Cupom</title>
-    <style>
-      body {
-        align-items: center;
-        background: #f5f7fa;
-        color: #16202a;
-        display: flex;
-        font-family: Arial, sans-serif;
-        justify-content: center;
-        margin: 0;
-        min-height: 100vh;
-      }
-
-      main {
-        background: #ffffff;
-        border: 1px solid #d8dee6;
-        border-radius: 8px;
-        max-width: 420px;
-        padding: 32px;
-        text-align: center;
-        width: calc(100% - 48px);
-      }
-
-      .code {
-        border: 1px dashed #64748b;
-        border-radius: 6px;
-        font-size: 28px;
-        font-weight: 700;
-        margin-top: 20px;
-        overflow-wrap: anywhere;
-        padding: 16px;
-      }
-
-      .failed {
-        color: #b42318;
-      }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('pages.css', filename='coupon.css') }}">
   </head>
   <body>
     <main>
-      <h1>Resgate de Cupom</h1>
-      <p id="message">Buscando codigo...</p>
-      <div id="code" class="code" hidden></div>
+      <div class="texts">
+        <h1 id="tittle">Resgate de Cupom</h1>
+        <p id="message">Buscando codigo...</p>
+      </div>
+      <div id="code" class="code" hidden style="cursor: pointer; user-select: none;">
+        <span id="code-text" class="code-text"></span>
+      </div>
+      <div id="already-used" class="already-used" hidden >
+        <img 
+          src="{{ url_for('pages.images', filename='ragnarok_bichinho_fofo.png') }}"
+          alt="Cupom ja utilizado"
+        >
+      </div>
     </main>
 
     <script>
       const couponId = "{{ coupon_id }}";
+      const texts = document.querySelector(".texts");
       const message = document.getElementById("message");
       const code = document.getElementById("code");
+      const codeText = document.getElementById("code-text");
+      const alreadyUsed = document.getElementById("already-used");
+      const tittle = document.getElementById("tittle");
+
+      // Adiciona evento de clique para copiar o cupom
+      code.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(codeText.textContent);
+          // Feedback visual
+          const originalText = message.textContent;
+          message.textContent = "Código Copiado!";
+          message.classList.remove("failed");
+          setTimeout(() => {
+            message.textContent = originalText;
+          }, 2000);
+        } catch (err) {
+          console.error("Erro ao copiar:", err);
+          message.textContent = "Erro ao copiar o código";
+          message.classList.add("failed");
+        }
+      });
 
       fetch(`/api/${couponId}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            message.textContent = "Codigo resgatado com sucesso";
-            code.textContent = data.code;
+            texts.hidden = false;
+            alreadyUsed.style.display = "none";
+            message.textContent = "Copie o cupom gerado abaixo";
+            codeText.textContent = data.code;
             code.hidden = false;
+            return;
+          }
+
+          if (data.message === "already used") {
+            texts.hidden = true;
+            code.hidden = true;
+            alreadyUsed.hidden = false;
+            tittle.textContent = "Cupom expirado";
+            message.textContent = "Parece que o cupom gerado já foi usado...";
             return;
           }
 

@@ -1,0 +1,107 @@
+@font-face {
+    font-family: constan;
+    src: url("../fonts/constan.ttf") format("truetype");
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    align-items: center;
+    display: flex;
+    font-family: constan, Arial, sans-serif;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    justify-content: center;
+    margin: 0;
+    min-height: 100vh;
+    background-image: url("../images/ragnarok_fundo.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #FFF995;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 16px;
+    text-align: center;
+    width: min(90%, 720px);
+    min-height: 480px;
+    aspect-ratio: 16 / 9;
+    background-image: url("../images/ragnarok_caixa.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #FFF995;
+}
+
+main h1,
+main p {
+    background: linear-gradient(180deg, #FFFDDE 5%, #FFF995 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.texts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5rem;
+    width: 90%;
+}
+
+.code {
+    background-image: url("../images/ragnarok_textbox.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+
+    margin-top: 2rem;
+    overflow-wrap: anywhere;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 16px;
+        
+}
+
+.code-text {
+    background: linear-gradient(180deg, #FFFDDE 5%, #FFF995 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.already-used {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    width: 100%;
+}
+
+.already-used img {
+    display: block;
+    height: auto;
+    max-height: 280px;
+    max-width: 50%;
+    object-fit: contain;
+}
+
+.failed {
+    background: none;
+    color: #b42318;
+    -webkit-text-fill-color: #b42318;
+}
