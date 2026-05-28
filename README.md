@@ -24,14 +24,14 @@ copy .env.example .env
 docker compose up -d
 ```
 
-API em `http://127.0.0.1:5000`.
+API em `http://127.0.0.1:5001`.
 
 ## Variaveis de ambiente
 
 ```env
 API_KEY=change-me-api-key
-BASE_URL=http://127.0.0.1:5000
-MONGO_URI=mongodb://dbprojeto:3177@mongodb:27017/ragnarok?authSource=admin
+BASE_URL=http://127.0.0.1:5001
+MONGO_URI=mongodb://dbprojeto:3177@mongodb:27021/ragnarok?authSource=admin
 ```
 
 ## CSV
@@ -94,7 +94,13 @@ Abre uma pagina simples que chama `GET /api/6f2f0139-eed8-4da8-ae78-9674e10b3f5e
 GET /pages/demo
 ```
 
-Abre uma pagina de demonstracao com botao `INICIAR`, chama `GET /api/genragcode` e gera um QR code com o link de resgate. Esta rota funciona apenas com `FLASK_ENV=development` se `FLASK_ENV=production`, não funciona.
+Abre uma pagina de demonstracao com botao `INICIAR`, chama `GET /api/genragcode` e gera um QR code com o link de resgate. Esta rota funciona apenas com `FLASK_ENV=development`.
+
+```http
+GET /docs
+```
+
+Abre o Swagger UI da API. Esta rota funciona apenas com `FLASK_ENV=development`.
 
 ```http
 GET /api/6f2f0139-eed8-4da8-ae78-9674e10b3f5e
