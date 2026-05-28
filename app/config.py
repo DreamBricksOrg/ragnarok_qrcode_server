@@ -7,6 +7,7 @@ load_dotenv()
 
 
 class BaseConfig:
+    ENV_NAME = getenv("FLASK_ENV", "development")
     SECRET_KEY = getenv("SECRET_KEY", "dev-secret")
     API_KEY = getenv("API_KEY", "dev-api-key")
     BASE_URL = getenv("BASE_URL", "http://127.0.0.1:5000")
@@ -15,15 +16,18 @@ class BaseConfig:
 
 
 class DevelopmentConfig(BaseConfig):
+    ENV_NAME = "development"
     DEBUG = getenv("FLASK_DEBUG", "true").lower() == "true"
 
 
 class TestingConfig(BaseConfig):
+    ENV_NAME = "testing"
     TESTING = True
     MONGO_URI = getenv("MONGO_TEST_URI", "mongodb://localhost:27017/ragnarok_test")
 
 
 class ProductionConfig(BaseConfig):
+    ENV_NAME = "production"
     DEBUG = False
 
 

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demonstração de Cupom</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        align-items: center;
+        background: #eef2f6;
+        color: #17202a;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      main {
+        background: #ffffff;
+        border: 1px solid #d7dde5;
+        border-radius: 8px;
+        box-sizing: border-box;
+        max-width: 520px;
+        padding: 32px;
+        text-align: center;
+        width: calc(100% - 48px);
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin: 0 0 20px;
+      }
+
+      button {
+        background: #176b5d;
+        border: 0;
+        border-radius: 6px;
+        color: #ffffff;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        min-height: 48px;
+        padding: 0 28px;
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.7;
+      }
+
+      .result {
+        margin-top: 28px;
+      }
+
+      #qrcode {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+        min-height: 220px;
+      }
+
+      a {
+        color: #155eef;
+        display: block;
+        margin-top: 18px;
+        overflow-wrap: anywhere;
+      }
+
+      .message {
+        margin: 18px 0 0;
+      }
+
+      .error {
+        color: #b42318;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Demonstração de Cupom</h1>
+      <button id="start-button" type="button">INICIAR</button>
+
+      <section class="result" aria-live="polite">
+        <p id="message" class="message"></p>
+        <div id="qrcode"></div>
+        <a id="coupon-link" href="#" target="_blank" rel="noopener" hidden></a>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+      const apiKey = "{{ api_key }}";
+      const baseUrl = "{{ base_url }}";
+      const startButton = document.getElementById("start-button");
+      const message = document.getElementById("message");
+      const qrcode = document.getElementById("qrcode");
+      const couponLink = document.getElementById("coupon-link");
+
+      function setMessage(text, isError = false) {
+        message.textContent = text;
+        message.classList.toggle("error", isError);
+      }
+
+      function renderQrCode(url) {
+        qrcode.innerHTML = "";
+        new QRCode(qrcode, {
+          text: url,
+          width: 220,
+          height: 220,
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+
+        couponLink.href = url;
+        couponLink.textContent = url;
+        couponLink.hidden = false;
+      }
+
+      startButton.addEventListener("click", async () => {
+        startButton.disabled = true;
+        couponLink.hidden = true;
+        qrcode.innerHTML = "";
+        setMessage("Gerando QR code...");
+
+        try {
+          const response = await fetch(`${baseUrl}/api/genragcode`, {
+            headers: {
+              "api-key": apiKey,
+            },
+          });
+          const data = await response.json();
+
+          if (!response.ok || !data.url) {
+            setMessage(data.message || "Nao foi possivel gerar o QR code.", true);
+            return;
+          }
+
+          renderQrCode(data.url);
+          setMessage("QR code gerado com sucesso.");
+        } catch (error) {
+          setMessage("Nao foi possivel gerar o QR code.", true);
+        } finally {
+          startButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

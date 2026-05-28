@@ -91,6 +91,12 @@ GET /pages/6f2f0139-eed8-4da8-ae78-9674e10b3f5e
 Abre uma pagina simples que chama `GET /api/6f2f0139-eed8-4da8-ae78-9674e10b3f5e`.
 
 ```http
+GET /pages/demo
+```
+
+Abre uma pagina de demonstracao com botao `INICIAR`, chama `GET /api/genragcode` e gera um QR code com o link de resgate. Esta rota funciona apenas com `FLASK_ENV=development` se `FLASK_ENV=production`, não funciona.
+
+```http
 GET /api/6f2f0139-eed8-4da8-ae78-9674e10b3f5e
 ```
 
